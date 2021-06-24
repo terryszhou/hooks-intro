@@ -1,8 +1,4 @@
-import { 
-    useState,
-    useEffect 
-} from 'react'
-
+import { useState, useEffect } from 'react'
 const log = console.log
 
 const Counter = () => {
@@ -11,15 +7,27 @@ const Counter = () => {
         name: "Terry",
         favFood: "🍖"
     })
+    const [timer, setTimer] = useState(0)
+
+    // useEffect(() => {
+    //     log(user)
+    // }, [user])
+
+    // useEffect(() => {
+    //     log("First render")
+    //     //useful for API calls
+    // }, [])
 
     useEffect(() => {
-        log(user)
-    }, [user])
+        const incrementTime = () => {
+            setTimer(timer + 1)
+        }
+        const interval = setInterval(incrementTime, 1000)
+        return () => {
+            clearInterval(interval)
+        }
+    }, [timer])
 
-    useEffect(() => {
-        log("First render")
-        //useful for API calls
-    }, [])
 
     const handleIncreaseCount = () => {
         setCount(count + 1)
@@ -44,6 +52,7 @@ const Counter = () => {
             <h3>The current count is {count}</h3>
             <button onClick={handleIncreaseCount}>+</button>
             <button onClick={handleDecreaseCount}>-</button>
+            <h3>The current time is: {timer} </h3>
         </div>
     )
 }
